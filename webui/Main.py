@@ -805,6 +805,48 @@ def tr(key):
     return locales.get("en", {}).get("Translation", {}).get(key, key)
 
 
+# Arabic UI direction: retain native Streamlit controls and apply RTL only
+# when the Arabic locale is selected.
+if st.session_state.get("ui_language") == "ar":
+    st.markdown(
+        """
+        <style>
+        .stApp,
+        [data-testid="stAppViewContainer"],
+        [data-testid="stMain"],
+        [data-testid="stMainBlockContainer"],
+        [data-testid="stDialog"] {
+            direction: rtl !important;
+            text-align: right !important;
+        }
+        [data-testid="stMainBlockContainer"] div[data-testid="stMarkdownContainer"],
+        [data-testid="stWidgetLabel"],
+        [data-testid="stWidgetLabel"] p {
+            direction: rtl !important;
+            text-align: right !important;
+        }
+        [data-testid="stTextInput"] input,
+        [data-testid="stTextArea"] textarea,
+        [data-testid="stNumberInput"] input {
+            direction: rtl !important;
+            text-align: right !important;
+        }
+        [data-baseweb="select"] > div {
+            direction: rtl !important;
+            text-align: right !important;
+        }
+        [data-testid="stHorizontalBlock"] {
+            direction: rtl !important;
+        }
+        [data-testid="stDialog"] * {
+            text-align: right;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 # -----------------------------------------------------------------------------
 # 任务管理：历史扫描、运行状态、参数恢复与列表交互
 # -----------------------------------------------------------------------------
