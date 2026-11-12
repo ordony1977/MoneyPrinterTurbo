@@ -1,19 +1,227 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <title>MoneyPrinterTurbo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+  <meta name="description" content="استوديو عربي لإنشاء الفيديوهات القصيرة باستخدام MoneyPrinterTurbo">
+  <title>استوديو الفيديو | MoneyPrinterTurbo</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b1120;--panel:#121c2e;--panel2:#172338;--line:#26364f;--text:#f4f7fb;--muted:#9aa9bd;--accent:#7c8cff;--accent2:#5ce0bd;--danger:#ff8585;--radius:18px}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(ellipse at 85% -10%,#24345c 0,transparent 42%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.6}
+    .wrap{width:min(900px,100%);margin:auto;padding:24px 18px 56px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#8b9cff,#5ce0bd);color:#101827;font-size:23px;font-weight:900}
+    h1{font-size:clamp(1.35rem,4vw,2rem);margin:0;line-height:1.25}.sub{color:var(--muted);font-size:.88rem;margin-top:3px}
+    .pill{border:1px solid var(--line);border-radius:999px;padding:5px 10px;color:var(--muted);font-size:.78rem;white-space:nowrap}
+    .intro{margin:0 0 18px;color:#c3cee0}
+    .card{background:linear-gradient(180deg,rgba(23,35,56,.96),rgba(18,28,46,.96));border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:14px 0;box-shadow:0 16px 42px #0002}
+    .card h2{font-size:1.08rem;margin:0 0 14px}
+    label{display:block;font-size:.9rem;font-weight:650;margin:0 0 7px}
+    input,textarea,select{width:100%;border:1px solid #354763;border-radius:12px;background:#0c1525;color:var(--text);padding:12px 13px;font:inherit;outline:none;min-height:46px}
+    textarea{min-height:118px;resize:vertical}
+    input:focus,textarea:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px #7c8cff22}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .field{min-width:0}.hint{color:var(--muted);font-size:.78rem;margin-top:5px}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    button{border:0;border-radius:12px;padding:12px 18px;font:inherit;font-weight:750;cursor:pointer;min-height:48px}
+    button.primary{background:linear-gradient(135deg,#8796ff,#6478f5);color:white;flex:1}
+    button.secondary{background:#24334d;color:#dbe6f7;border:1px solid #3a4d6b}
+    button:disabled{opacity:.55;cursor:wait}
+    .status{display:none}.status.show{display:block}
+    .status-line{display:flex;justify-content:space-between;gap:10px;color:#dce6f5;font-size:.9rem}
+    .track{height:9px;background:#0a1220;border-radius:99px;overflow:hidden;margin:10px 0 6px}
+    .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .35s}
+    .message{color:var(--muted);font-size:.85rem;white-space:pre-wrap;overflow-wrap:anywhere}
+    .result a{display:block;color:#8fdcc8;padding:7px 0;overflow-wrap:anywhere}
+    .notice{border-right:3px solid #e5b85c;background:#2a2519;color:#f1dfb5;padding:10px 13px;border-radius:10px;font-size:.82rem;margin-top:12px}
+    footer{text-align:center;color:#77879d;font-size:.78rem;margin-top:24px}
+    @media(max-width:600px){.wrap{padding:16px 12px 36px}.card{padding:15px;border-radius:15px}.grid{grid-template-columns:1fr;gap:12px}.pill{display:none}header{margin-bottom:16px}.logo{width:40px;height:40px}}
+  </style>
 </head>
 <body>
-<h1>MoneyPrinterTurbo</h1>
-<a href="https://github.com/harry0703/MoneyPrinterTurbo">https://github.com/harry0703/MoneyPrinterTurbo</a>
-<p>
-    只需提供一个视频 主题 或 关键词 ，就可以全自动生成视频文案、视频素材、视频字幕、视频背景音乐，然后合成一个高清的短视频。
-</p>
+  <main class="wrap">
+    <header>
+      <div class="brand"><div class="logo" aria-hidden="true">▶</div><div><h1>استوديو الفيديو الذكي</h1><div class="sub">MoneyPrinterTurbo · واجهة عربية للهاتف</div></div></div>
+      <span class="pill">اتصال مباشر بمحرك API</span>
+    </header>
+    <p class="intro">اكتب فكرة الفيديو، أنشئ السيناريو بالنموذج المحدد في إعدادات MoneyPrinterTurbo، ثم أرسل المهمة إلى محرك إنتاج الفيديو.</p>
 
-<p>
-    Simply provide a topic or keyword for a video, and it will automatically generate the video copy, video materials,
-    video subtitles, and video background music before synthesizing a high-definition short video.
-</p>
+    <section class="card" aria-labelledby="connection-title">
+      <h2 id="connection-title">الاتصال بالخادم</h2>
+      <div class="grid">
+        <div class="field">
+          <label for="server">عنوان خادم MoneyPrinterTurbo</label>
+          <input id="server" type="url" inputmode="url" placeholder="اتركه فارغاً إذا فتحت الصفحة من نفس الخادم">
+          <div class="hint">مثال: http://192.168.1.10:8080</div>
+        </div>
+        <div class="field">
+          <label for="apiKey">مفتاح API (اختياري)</label>
+          <input id="apiKey" type="password" autocomplete="off" placeholder="يُستخدم لهذه الجلسة فقط">
+          <div class="hint">اتركه فارغاً إذا لم تضبط app.api_key في الخادم.</div>
+        </div>
+      </div>
+      <div class="actions"><button class="secondary" id="checkBtn" type="button">اختبار الاتصال</button></div>
+      <div class="message" id="connectionMsg" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="card" aria-labelledby="create-title">
+      <h2 id="create-title">إنشاء فيديو جديد</h2>
+      <div class="field">
+        <label for="subject">موضوع الفيديو أو فكرته</label>
+        <textarea id="subject" maxlength="500" placeholder="مثال: كيف غيّرت السيارات الكهربائية مستقبل النقل؟" required></textarea>
+      </div>
+      <div class="field" style="margin-top:14px">
+        <label for="script">السيناريو الصوتي (اختياري)</label>
+        <textarea id="script" maxlength="8000" placeholder="اتركه فارغاً ليولّد النموذج السيناريو تلقائياً، أو الصق سيناريو جاهزاً."></textarea>
+      </div>
+      <div class="grid" style="margin-top:14px">
+        <div class="field"><label for="language">لغة السيناريو</label><select id="language"><option value="Arabic">العربية</option><option value="English">English</option><option value="auto">تلقائي</option></select></div>
+        <div class="field"><label for="aspect">أبعاد الفيديو</label><select id="aspect"><option value="9:16">عمودي 9:16 — Shorts / Reels</option><option value="16:9">أفقي 16:9 — YouTube</option><option value="1:1">مربع 1:1</option></select></div>
+        <div class="field"><label for="clipDuration">مدة كل لقطة (ثانية)</label><select id="clipDuration"><option>4</option><option selected>5</option><option>6</option><option>8</option><option>10</option><option>12</option><option>15</option></select></div>
+        <div class="field"><label for="count">عدد الفيديوهات</label><select id="count"><option selected>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+        <div class="field"><label for="paragraphs">عدد فقرات السيناريو</label><select id="paragraphs"><option>1</option><option selected>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      </div>
+      <div class="notice">توليد الفيديو قد يستغرق عدة دقائق، وقد تستخدم بعض مصادر الصور أو الفيديو خدمات مدفوعة وفق إعدادات الخادم.</div>
+      <div class="actions"><button class="primary" id="generateBtn" type="button">إنشاء الفيديو الآن</button></div>
+    </section>
+
+    <section class="card status" id="statusCard" aria-live="polite">
+      <h2>حالة المهمة</h2>
+      <div class="status-line"><strong id="statusText">بانتظار البدء</strong><span id="progressText">0%</span></div>
+      <div class="track"><div class="bar" id="progressBar"></div></div>
+      <div class="message" id="statusMessage"></div>
+      <div class="result" id="results"></div>
+    </section>
+    <footer>MoneyPrinterTurbo · تعمل هذه الصفحة مع API الخاص بالخادم الذي تستضيفه.</footer>
+  </main>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const statusCard = $("statusCard");
+  let busy = false;
+
+  function apiBase() {
+    const entered = $("server").value.trim();
+    const base = entered || (location.protocol === "file:" ? "" : location.origin);
+    return base.replace(/\/+$/, "");
+  }
+  function headers(json = true) {
+    const h = {};
+    if (json) h["Content-Type"] = "application/json";
+    const key = $("apiKey").value.trim();
+    if (key) h["x-api-key"] = key;
+    return h;
+  }
+  async function api(path, options = {}) {
+    const base = apiBase();
+    if (!base) throw new Error("أدخل عنوان خادم MoneyPrinterTurbo أولاً.");
+    let response;
+    try {
+      response = await fetch(base + path, {...options, headers: {...headers(options.body !== undefined), ...(options.headers || {})}});
+    } catch (e) {
+      throw new Error("تعذّر الوصول إلى الخادم. تحقق من العنوان والشبكة وإعدادات CORS عند استخدام صفحة من نطاق مختلف.");
+    }
+    let data;
+    try { data = await response.json(); } catch (_) { throw new Error("استجابة الخادم ليست JSON صالحاً."); }
+    if (!response.ok || (data.status && data.status !== 200)) {
+      throw new Error(data.message || ("فشل الطلب: HTTP " + response.status));
+    }
+    return data.data ?? data;
+  }
+  function showStatus(title, message = "", progress = 0) {
+    statusCard.classList.add("show");
+    $("statusText").textContent = title;
+    $("statusMessage").textContent = message;
+    $("progressText").textContent = progress + "%";
+    $("progressBar").style.width = Math.max(0, Math.min(100, progress)) + "%";
+  }
+  function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+
+  $("checkBtn").addEventListener("click", async () => {
+    $("connectionMsg").textContent = "جارٍ اختبار الاتصال…";
+    try {
+      await api("/ping", {method:"GET", headers:{}});
+      $("connectionMsg").textContent = "تم الاتصال بالخادم بنجاح.";
+    } catch (e) {
+      $("connectionMsg").textContent = e.message + " إذا لم يعمل /ping، افتح /docs على عنوان الخادم للتأكد من تشغيل API.";
+    }
+  });
+
+  $("generateBtn").addEventListener("click", async () => {
+    if (busy) return;
+    const subject = $("subject").value.trim();
+    if (!subject) { $("subject").focus(); alert("اكتب موضوع الفيديو أولاً."); return; }
+    busy = true;
+    $("generateBtn").disabled = true;
+    $("results").replaceChildren();
+    try {
+      let script = $("script").value.trim();
+      if (!script) {
+        showStatus("إنشاء السيناريو…", "يستخدم الخادم مزوّد اللغة المحدد في إعدادات MoneyPrinterTurbo.", 5);
+        const generated = await api("/api/v1/scripts", {
+          method:"POST",
+          body:JSON.stringify({
+            video_subject:subject,
+            video_language:$("language").value,
+            paragraph_number:Number($("paragraphs").value)
+          })
+        });
+        script = generated.video_script || "";
+        if (!script) throw new Error("لم يُرجع النموذج سيناريو صالحاً.");
+        $("script").value = script;
+      }
+      showStatus("إرسال مهمة الفيديو…", "تم تجهيز السيناريو. جارٍ إرسال الطلب إلى محرك الإنتاج.", 10);
+      const created = await api("/api/v1/videos", {
+        method:"POST",
+        body:JSON.stringify({
+          video_subject:subject,
+          video_script:script,
+          video_language:$("language").value,
+          video_aspect:$("aspect").value,
+          video_clip_duration:Number($("clipDuration").value),
+          video_count:Number($("count").value),
+          video_source:"pexels",
+          subtitle_enabled:true,
+          video_fit_mode:"cover",
+          image_motion:"zoom"
+        })
+      });
+      const taskId = created.task_id;
+      if (!taskId) throw new Error("لم يُرجع الخادم رقم المهمة.");
+      showStatus("الفيديو قيد المعالجة", "رقم المهمة: " + taskId, 10);
+      for (let attempt = 0; attempt < 240; attempt++) {
+        await sleep(3000);
+        const task = await api("/api/v1/tasks/" + encodeURIComponent(taskId), {method:"GET", headers:{}});
+        const progress = Number(task.progress || 0);
+        if (task.state === 1) {
+          showStatus("اكتمل إنشاء الفيديو", "اكتملت المهمة بنجاح.", 100);
+          const files = [...(task.combined_videos || []), ...(task.videos || [])];
+          if (!files.length) $("statusMessage").textContent += " لكن الخادم لم يُرجع روابط ملفات.";
+          files.forEach((file, index) => {
+            const a = document.createElement("a");
+            a.href = new URL(file, apiBase() + "/").href;
+            a.target = "_blank";
+            a.rel = "noopener";
+            a.textContent = "فتح الفيديو " + (index + 1);
+            $("results").appendChild(a);
+          });
+          return;
+        }
+        if (task.state === -1) throw new Error(task.error || "فشلت مهمة إنشاء الفيديو.");
+        showStatus("الفيديو قيد المعالجة", "رقم المهمة: " + taskId, progress);
+      }
+      throw new Error("انتهت مهلة متابعة المهمة. يمكنك متابعة رقم المهمة من سجل المهام في WebUI.");
+    } catch (e) {
+      showStatus("تعذّر إكمال الطلب", e.message, 0);
+    } finally {
+      busy = false;
+      $("generateBtn").disabled = false;
+    }
+  });
+})();
+</script>
 </body>
 </html>
